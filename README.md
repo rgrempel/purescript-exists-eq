@@ -23,7 +23,7 @@ original type.
 
 So, this module provides a `someEq` function, which turns any value with an
 `Eq` instance into a `SomeEq` (with no type variable). All you can do with a
-SomeEq` is compare it for equality with another `SomeEq`. The nice thing is
+`SomeEq` is compare it for equality with another `SomeEq`. The nice thing is
 that the two `SomeEq` values may originally have been different types.
 
 ## Installation

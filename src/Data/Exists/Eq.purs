@@ -18,7 +18,7 @@
 -- |
 -- | So, this module provides a `someEq` function, which turns any value with an
 -- | `Eq` instance into a `SomeEq` (with no type variable). All you can do with a
--- | SomeEq` is compare it for equality with another `SomeEq`. The nice thing is
+-- | `SomeEq` is compare it for equality with another `SomeEq`. The nice thing is
 -- | that the two `SomeEq` values may originally have been different types.
 
 module Data.Exists.Eq
@@ -33,7 +33,7 @@ import Data.Eq (class Eq, eq)
 -- | A type for values that have forgotten everything but how to determine whether
 -- | they are equal to another value.
 -- |
--- | You can produce an `SomeEq` via the `someEq` function. Once you have an `SomeEq`,
+-- | You can produce an `SomeEq` via the `someEq` function. Once you have a `SomeEq`,
 -- | the only thing you can do with it is check it for equality with another `SomeEq`.
 -- |
 -- |     someEq 5 == someEq 5
