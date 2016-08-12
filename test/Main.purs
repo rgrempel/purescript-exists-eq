@@ -32,6 +32,7 @@ tests =
             assert "Int String false" $ not (5 `eqAny` "five")
             assert "String String true" $ "five" `eqAny` "five"
             assert "String String false" $ not ("five" `eqAny` "six")
+            assert "Make sure JS auto-coercion doesn't create trouble" $ not (0 `eqAny` "")
 
         test "someEq" do
             assert "Int Int true" $ someEq 5 == someEq 5
@@ -39,3 +40,4 @@ tests =
             assert "Int String false" $ someEq 5 /= someEq "five"
             assert "String String true" $ someEq "five" == someEq "five"
             assert "String String false" $ someEq "five" /= someEq "six"
+            assert "Make sure JS auto-coercion doesn't create trouble" $ someEq 0 /= someEq ""
