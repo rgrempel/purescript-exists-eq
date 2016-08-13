@@ -2,7 +2,7 @@
 -- | Ordinarily, you can only check two values for equality if the type-checker
 -- | knows that they are the same type.
 -- |
--- | This module provides a `someEq` function which loosens that restriction. It
+-- | This module provides an `eqAny` function which loosens that restriction. It
 -- | works with any two values, no matter their type, so long as each has an `Eq`
 -- | instance. To do so, it checks whether the two `Eq` instances are implemented
 -- | with the same function. If so, clearly that function can take both values,
@@ -18,7 +18,7 @@
 -- |
 -- | So, this module provides a `someEq` function, which turns any value with an
 -- | `Eq` instance into a `SomeEq` (with no type variable). All you can do with a
--- | `SomeEq` is compare it for equality with another `SomeEq`. The nice thing is
+-- | `SomeEq` is check it for equality with another `SomeEq`. The nice thing is
 -- | that the two `SomeEq` values may originally have been different types.
 
 module Data.Exists.Eq
