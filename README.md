@@ -8,10 +8,15 @@ Ordinarily, you can only check two values for equality if the type-checker
 knows that they are the same type.
 
 This module provides an `eqAny` function which loosens that restriction. It
-works with any two values, no matter their type, so long as each has an `Eq`
+works with any two values, so long as each has an `Eq`
 instance. To do so, it checks whether the two `Eq` instances are implemented
 with the same function. If so, clearly that function can take both values,
 and can be called to determine equality. If not, clearly the values are unequal.
+
+**Note that it turns out that this mechanism currently works only with `*`
+kinds, not `* -> *` or higher kinds (see examples below). I am working on a
+fix, likely by requiring a
+[`Typeable`](https://github.com/joneshf/purescript-typeable) constraint.**
 
 But why would the type-checker not know that the two values are of the same
 type? On occasion, it is convenient to "forget" the type of a value, and only

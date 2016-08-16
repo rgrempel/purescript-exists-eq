@@ -3,10 +3,15 @@
 -- | knows that they are the same type.
 -- |
 -- | This module provides an `eqAny` function which loosens that restriction. It
--- | works with any two values, no matter their type, so long as each has an `Eq`
+-- | works with any two values, so long as each has an `Eq`
 -- | instance. To do so, it checks whether the two `Eq` instances are implemented
 -- | with the same function. If so, clearly that function can take both values,
 -- | and can be called to determine equality. If not, clearly the values are unequal.
+-- |
+-- | **Note that it turns out that this mechanism currently works only with `*`
+-- | kinds, not `* -> *` or higher kinds (see examples below). I am working on a
+-- | fix, likely by requiring a
+-- | [`Typeable`](https://github.com/joneshf/purescript-typeable) constraint.**
 -- |
 -- | But why would the type-checker not know that the two values are of the same
 -- | type? On occasion, it is convenient to "forget" the type of a value, and only
@@ -41,6 +46,15 @@ import Data.Eq (class Eq, eq)
 -- |     someEq 5 /= someEq "five"
 -- |     someEq "five" == someEq "five"
 -- |     someEq "five" /= someEq "six"
+-- |
+-- | **Unfortunately, it turns out that this only works with `*` kinds, and not
+-- | with `* -> *` and higher kinds.** So, for instance:
+-- |
+-- |     someEq (Just 5) /= someEq (Just 5)  -- sadly
+-- |
+-- | I will work on fixing this, likely via requiring a
+-- | [`Typeable`](https://github.com/joneshf/purescript-typeable) constraint in
+-- | `someEq`.
 newtype SomeEq = SomeEq (∀ b. (∀ a. (Eq a) => a -> b) -> b)
 
 
@@ -64,6 +78,15 @@ instance eqSomeEq :: Eq SomeEq where
 -- |     5 `eqAny` "five" == false
 -- |     "five" `eqAny` "five" == true
 -- |     "five" `eqAny` "six" == false
+-- |
+-- | **Unfortunately, it turns out that this only works with `*` kinds, and not
+-- | with `* -> *` and higher kinds.** So, for instance:
+-- |
+-- |     Just 5 `eqAny` Just 5 == false  -- sadly
+-- |
+-- | I will work on fixing this, likely via requiring a
+-- | [`Typeable`](https://github.com/joneshf/purescript-typeable) constraint on
+-- | `a` and `b`.
 eqAny :: ∀ a b. (Eq a, Eq b) => a -> b -> Boolean
 eqAny a b =
     let
